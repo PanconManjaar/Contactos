@@ -5,12 +5,13 @@ os.system('cls')
 def Menu():
     
     while True:
+        os.system('cls')
         print("Menú contactos")
         print("1. Agregar contacto")
         print("2. Ver contactos")
         print("3. Exportar archivo CSV")
         print("4. Salir")
-        opc=int(input("Ingrese una opción: "))
+        opc=validad_opc()
 
         if opc==1:
             opción_1()
@@ -20,13 +21,12 @@ def Menu():
             opción_3()
         elif opc==4:
             opción_4()
-
 def opción_1():
     os.system('cls')
     print("AGREGAR CONTACTOS")
-    Nombre=input("Ingrese nombre del contacto: ")
-    Telefono=int(input("Ingrese número de telefono: "))
-    Correo=input("Ingrese correo electronico: ")
+    Nombre = validar_nombre()
+    Telefono = validar_Telefono()
+    Correo = validar_correo()
 
     Contacto={"Nombre":Nombre,
               "Telefono":Telefono,
@@ -36,7 +36,6 @@ def opción_1():
     print("Contacto agregado!")
     time.sleep(3)
     os.system('cls')
-
 def opción_2():
     os.system('cls')
     if not Contactos:
@@ -47,8 +46,6 @@ def opción_2():
             print(f"Nombre: {c['Nombre']}\nTelefono: {c['Telefono']}\nCorreo: {c['Correo']}")
             print("")
     time.sleep(3)
-    
-
 def opción_3():
     os.system('cls')
     if len(Contactos)==0:
@@ -58,7 +55,7 @@ def opción_3():
         with open (nombre_archivo+".csv","w",newline="") as archivo: 
             Escritor = csv.DictWriter(archivo,["Nombre","Telefono","Correo"])
             Escritor.writerows(Contactos)
-            
+
         print("ARCHIVO GUARDADO!")
         time.sleep(3)
         os.system('cls')
@@ -68,3 +65,42 @@ def opción_4():
     
     exit()
     
+def validad_opc():
+    try:
+        opc=int(input("Ingrese una opción: "))
+        if opc in (1,2,3,4):
+            return opc
+        else:
+            print("ERROR! Debe ingresar una de las opciones mostrada!")
+    except:
+        print("ERROR! Debe ingresar un número entero!")
+    time.sleep(3)
+
+
+def validar_nombre():
+    while True:
+        nom = input("Ingrese nombre:")
+        if len(nom.strip())>=3 and nom.isalpha():
+            return nom
+        else: 
+            print("ERROR! Ingrese un nombre mayor a 3 y sólo letras!")
+
+def validar_Telefono():
+    while True:
+        try:
+            tel = int(input("Ingrese número telefonico: "))
+            if len(str(tel))==9 and str(tel)[0]==9:
+                return tel
+            else: 
+                print("ERROR! El telefono debe comenzar con 9 y tener 9 digitos!")
+        except:
+            print("ERROR! Debe ingresar números enteros!")
+
+def validar_correo():
+    while True:
+        cor = input("Ingrese correo:")
+        if cor.strip().lower().endswith("@gmail.com") and len(cor.strip())>=13:
+            return cor
+        else: 
+            print("ERROR! Ingrese un correo mayor a 10 y sólo letras!")
+
