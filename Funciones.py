@@ -55,9 +55,13 @@ def opción_3():
         print("No hay contactos agregados...")
     else:
         nombre_archivo = input("Ingrese nombre del archivo: ")
-        with open (nombre_archivo+".csv","w") as archivo: 
-            pass
-
+        with open (nombre_archivo+".csv","w",newline="") as archivo: 
+            Escritor = csv.DictWriter(archivo,["Nombre","Telefono","Correo"])
+            Escritor.writerows(Contactos)
+            
+        print("ARCHIVO GUARDADO!")
+        time.sleep(3)
+        os.system('cls')
 def opción_4():
     os.system('cls')
     print("Cerrando programa...")
