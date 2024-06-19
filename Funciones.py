@@ -52,9 +52,12 @@ def opción_3():
         print("No hay contactos agregados...")
     else:
         nombre_archivo = input("Ingrese nombre del archivo: ")
-        with open (nombre_archivo+".csv","w",newline="") as archivo: 
-            Escritor = csv.DictWriter(archivo,["Nombre","Telefono","Correo"])
-            Escritor.writerows(Contactos)
+        try:
+            with open (nombre_archivo+".csv","x",newline="") as archivo: 
+                Escritor = csv.DictWriter(archivo,["Nombre","Telefono","Correo"])
+                Escritor.writerows(Contactos)
+        except:
+            print("ERROR! El nombre del archivo ya existe")
 
         print("ARCHIVO GUARDADO!")
         time.sleep(3)
@@ -98,7 +101,7 @@ def validar_Telefono():
 
 def validar_correo():
     while True:
-        cor = input("Ingrese correo:")
+        cor = input("Ingrese correo(Solo @gmail.com):")
         if cor.strip().lower().endswith("@gmail.com") and len(cor.strip())>=13:
             return cor
         else: 
